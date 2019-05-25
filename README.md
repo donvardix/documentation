@@ -1,1 +1,1 @@
-# [documentation](https://github.com/donvardix/documentation/wiki/BWTGroup)
+# [documentation](https://github.com/donvardix/documentation/wiki)
