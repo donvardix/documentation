@@ -1,0 +1,5 @@
+.idea/
+src/.venv/
+src/books/images/*
+src/books/stats.txt
+src/books/books/settings.py
