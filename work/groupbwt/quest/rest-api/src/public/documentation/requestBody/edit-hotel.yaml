@@ -1,0 +1,60 @@
+components:
+    schemas:
+        EditHotel:
+            title: EditHotel
+            properties:
+                name:
+                    title: name
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: Отель «ЗОЛОТАЯ АРКА»
+                description:
+                    title: description
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: Отель «ЗОЛОТАЯ АРКА» находится в Запорожье. В номерах с кондиционером предоставляется бесплатный Wi-Fi.
+                address:
+                    title: address
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: вул. 8 Березня 45
+                city:
+                    title: city
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: Запорожье
+                postcode:
+                    title: postcode
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: '69081'
+                country:
+                    title: country
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: Украина
+                rating:
+                    title: rating
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: '7.5'
+                image:
+                    title: image
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: full/6c356897d6ec03623aa66ccb08b6da7782fc448b.jpg
+                url_hotel:
+                    title: url_hotel
+                    description: Some text field
+                    type: string
+                    format: string
+                    example: https://www.booking.com/hotel/ua/zolotaia-arka.ru.html
+            type: object

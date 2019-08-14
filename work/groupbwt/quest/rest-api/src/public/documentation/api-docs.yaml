@@ -1,0 +1,297 @@
+openapi: 3.0.0
+info:
+    title: Hotels OpenApi
+    description: REST API
+    contact:
+        email: stetsenko_vv@groupbwt.com
+    version: 1.0.0
+servers:
+    - url: 'http://localhost/api/'
+      description: Hotels OpenApi Server
+paths:
+    '/hotels':
+        get:
+            tags:
+                - Hotels
+            summary: Get all hotels
+            operationId: hotelsAll
+            parameters:
+                - name: page
+                  in: query
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Hotels displayed
+                '401':
+                    description: Unauthorized
+                    schema:
+                        $ref: 'errors/200.yaml#/components/schemas/Error'
+            security:
+                - Authorization: []
+        post:
+            tags:
+                - Hotels
+            summary: Add new hotel
+            operationId: store
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: 'requestBody/edit-hotel.yaml#/components/schemas/EditHotel'
+            responses:
+                '201':
+                    description: Hotel successfully added
+                '401':
+                    description: Unauthorized
+                '422':
+                    description: The given data was invalid
+            security:
+                -   Authorization: []
+    '/hotels/{hotelId}':
+        get:
+            tags:
+                - Hotels
+            summary: Get hotel
+            operationId: hotel
+            parameters:
+                - name: hotelId
+                  in: path
+                  description: Hotel ID
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Hotel displayed
+                '401':
+                    description: Unauthorized
+                '404':
+                    description: Not found hotel
+            security:
+                - Authorization: []
+        put:
+            tags:
+                - Hotels
+            summary: Edit hotel
+            operationId: put
+            parameters:
+                -   name: hotelId
+                    in: path
+                    description: Hotel ID
+                    required: true
+                    schema:
+                        type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: 'requestBody/edit-hotel.yaml#/components/schemas/EditHotel'
+            responses:
+                '201':
+                    description: Hotel successfully edit
+                '401':
+                    description: Unauthorized
+                '422':
+                    description: The given data was invalid
+            security:
+                -   Authorization: []
+        delete:
+            tags:
+                - Hotels
+            summary: Delete hotel
+            operationId: delete
+            parameters:
+                -   name: hotelId
+                    in: path
+                    required: false
+                    schema:
+                        type: integer
+            responses:
+                '204':
+                    description: Hotel successfully deleted
+                '401':
+                    description: Unauthorized
+            security:
+                -   Authorization: []
+    '/hotels/{hotelId}/rooms':
+        get:
+            tags:
+                - Hotel rooms
+            summary: Get hotel rooms
+            operationId: hotelRooms
+            parameters:
+                - name: hotelId
+                  in: path
+                  description: Hotel ID
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: All hotel rooms are displayed
+                '401':
+                    description: Unauthorized
+                '404':
+                    description: Not found hotel
+            security:
+                - Authorization: []
+    '/hotels/{hotelId}/rooms/{roomId}':
+        get:
+            tags:
+                - Hotel rooms
+            summary: Get hotel room
+            operationId: hotelRoom
+            parameters:
+                - name: hotelId
+                  in: path
+                  description: Hotel ID
+                  required: true
+                  schema:
+                      type: integer
+                - name: roomId
+                  in: path
+                  description: Room ID
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Hotel room displayed
+                '401':
+                    description: Unauthorized
+                '404':
+                    description: Not found hotel or room
+            security:
+                - Authorization: []
+    '/rooms':
+        get:
+            tags:
+                - Rooms
+            summary: Get all rooms
+            operationId: roomsAll
+            parameters:
+                - name: page
+                  in: query
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: All rooms displayed
+                '401':
+                    description: Unauthorized
+            security:
+                - Authorization: []
+    '/rooms/{roomId}':
+        get:
+            tags:
+                - Rooms
+            summary: Get room
+            operationId: room
+            parameters:
+                - name: roomId
+                  in: path
+                  description: Room ID
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Room displayed
+                '401':
+                    description: Unauthorized
+                '404':
+                    description: Not found room
+            security:
+                - Authorization: []
+    '/start-parser':
+        get:
+            tags:
+                - Parser
+            summary: Start Parser (Example http://localhost/api/start-parser?city=Запорожье&checkin=15-08-2019&checkout=17-08-2019)
+            operationId: parser
+            parameters:
+                -   name: city
+                    in: query
+                    description: City
+                    required: true
+                    schema:
+                        type: string
+                -   name: checkin
+                    in: query
+                    description: Check in
+                    required: true
+                    schema:
+                        type: string
+                -   name: checkout
+                    in: query
+                    description: Checkout
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: Parser end
+                '401':
+                    description: Unauthorized
+                '422':
+                    description: The given data was invalid
+            security:
+                -   Authorization: []
+    '/register':
+        post:
+            tags:
+                - Authorization
+            summary: Authorization
+            operationId: register
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: 'requestBody/register.yaml#/components/schemas/RegisterRequest'
+            responses:
+                '201':
+                    description: Authorized
+                '422':
+                    description: Data failed validation
+    '/login':
+        post:
+            tags:
+                - Authorization
+            summary: Authorization
+            operationId: login
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: 'requestBody/login.yaml#/components/schemas/LoginRequest'
+            responses:
+                '200':
+                    description: Authorized
+                '401':
+                    description: Login or password is entered incorrectly
+    '/logout':
+        get:
+            tags:
+                - Authorization
+            summary: Logout
+            operationId: logout
+            responses:
+                '200':
+                    description: Logout
+                '401':
+                    description: Unauthorized
+            security:
+                -   Authorization: []
+components:
+    securitySchemes:
+        Authorization:
+            type: http
+            bearerFormat: JWT
+            scheme: bearer
